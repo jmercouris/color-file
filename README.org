@@ -2,6 +2,17 @@
 Color file is a package that you can use to colorize your minibuffer
 information while you are browsing through buffers or files.
 
+
+** Screenshots
+A screenshot showing how you can colorize files in the find-file
+minibuffer depending upon the type:
+
+#+html: <img src="static/find-file.png"/>
+
+A screenshot showing how you can colorize buffers in the switch-buffer
+minibuffer depending upon the mode:
+#+html: <img src="static/switch-buffer.png"/>
+
 ** Configuration
 *** Command Configuration
 To configure for which commands Color-File is active, there is a group
