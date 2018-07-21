@@ -5,7 +5,7 @@ information while you are browsing through buffers or files.
 ** Configuration
 *** Command Configuration
 To configure for which commands Color-File is active, there is a group
-available "color-file-ivy. Within this group there are two things you
+available "color-file-ivy". Within this group there are two things you
 can customize:
 
 - color-file-ivy-buffer-commands
@@ -20,7 +20,7 @@ configuration in the following way:
 
 #+NAME: color-mode-configuration
 #+BEGIN_SRC elisp
-  (setq color-file-ivy-colors
+  (setq color-file-ivy-mode-colors
         '((text-mode . "Green")
           (lisp-mode . "Blue")
           (emacs-lisp-mode . "Brown")))

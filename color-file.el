@@ -32,7 +32,7 @@
 (require 'ivy)
 (require 's)
 
-(setq color-file-ivy-colors
+(setq color-file-ivy-mode-colors
       '((text-mode . "Green")
         (lisp-mode . "Blue")
         (emacs-lisp-mode . "Brown")))
@@ -67,7 +67,7 @@
 (defun color-file-ivy--buffer-transformer (b s)
   "Return a candidate string for buffer B named S preceded by a color."
   (let* ((mode (buffer-local-value 'major-mode b))
-         (color (cdr (assoc mode color-file-ivy-colors))))
+         (color (cdr (assoc mode color-file-ivy-mode-colors))))
     (format "%s" (propertize s 'face (list :foreground color)))))
 
 (defun color-file-ivy-file-transformer (s)
