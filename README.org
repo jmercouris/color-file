@@ -1,0 +1,45 @@
+* Color File
+Color file is a package that you can use to colorize your minibuffer
+information while you are browsing through buffers or files.
+
+** Configuration
+*** Command Configuration
+To configure for which commands Color-File is active, there is a group
+available "color-file-ivy. Within this group there are two things you
+can customize:
+
+- color-file-ivy-buffer-commands
+- color-file-ivy-file-commands
+
+These two things represent the commands for which the color
+customization will be invoked.
+
+*** Color Configuration
+To Change the colors that appear for different modes enter your
+configuration in the following way:
+
+#+NAME: color-mode-configuration
+#+BEGIN_SRC elisp
+  (setq color-file-ivy-colors
+        '((text-mode . "Green")
+          (lisp-mode . "Blue")
+          (emacs-lisp-mode . "Brown")))
+#+END_SRC
+
+In the above example, all buffers of mode text-mode when invoking a
+switch-buffer command will be colored green.
+
+To change the colors that appear for different file types (using
+regex), enter your configuration in the following way:
+
+#+NAME: color-file-configuration
+#+BEGIN_SRC elisp
+  (setq color-file-ivy-regex-file-colors
+        '(("lisp$" . "Green")
+          ("txt$" . "Blue")
+          ("el$" . "Red")))
+#+END_SRC
+
+In the above example, all files ending with a "lisp" suffix will be
+colored green.
+
