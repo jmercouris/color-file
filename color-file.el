@@ -6,7 +6,7 @@
 ;; Author: John Mercouris
 ;; Version: 0.0.1
 ;; Keywords: color colorized-buffer color-file
-;; Package-Requires: ((emacs "24.4") (ivy "0.8.0"))
+;; Package-Requires: ((emacs "24.4") (ivy "0.8.0") (s))
 ;;
 ;; 1. Redistributions of source code must retain the above copyright
 ;; notice, this list of conditions and the following disclaimer.
@@ -32,17 +32,17 @@
 (require 'ivy)
 (require 's)
 
-(setq color-file-ivy-mode-colors
+(setq cfi-mode-colors
       '((text-mode . "Green")
         (lisp-mode . "Blue")
         (emacs-lisp-mode . "Brown")))
 
-(setq color-file-ivy-regex-file-colors
+(setq cfi-regex-file-colors
       '(("lisp$" . "Green")
         ("txt$" . "Blue")
         ("el$" . "Red")))
 
-(setq color-file-ivy-default-face "black")
+(setq cfi-default-face "black")
 
 (defgroup color-file-ivy nil
   "Shows color for modes and file types while using ivy and counsel."
@@ -52,7 +52,7 @@
   '(ivy-switch-buffer
     ivy-switch-buffer-other-window
     counsel-projectile-switch-to-buffer)
-  "Commands to use with `color-file-ivy-buffer-transformer'."
+  "Commands to use with `cfi-buffer-transformer'."
   :type '(repeat function)
   :group 'color-file-ivy)
 
@@ -60,40 +60,40 @@
   '(counsel-find-file
     counsel-projectile-find-file
     counsel-projectile-find-dir)
-  "Commands to use with `color-file-ivy-file-transformer'."
+  "Commands to use with `cfi-file-transformer'."
   :type '(repeat function)
   :group 'color-file-ivy)
 
-(defun color-file-ivy--buffer-transformer (b s)
+(defun cfi--buffer-transformer (b s)
   "Return a candidate string for buffer B named S preceded by a color."
   (let* ((mode (buffer-local-value 'major-mode b))
-         (color (cdr (assoc mode color-file-ivy-mode-colors))))
+         (color (cdr (assoc mode cfi-mode-colors))))
     (format "%s" (propertize s 'face (list :foreground color)))))
 
-(defun color-file-ivy-file-transformer (s)
+(defun cfi-file-transformer (s)
   "Return a candidate string for filename S preceded by an icon."
   (let ((found-color "Black"))
-    (loop for (key . value) in color-file-ivy-regex-file-colors
+    (loop for (key . value) in cfi-regex-file-colors
           do (when (s-match key s)
                (setf found-color value)))
     (format "%s" (propertize s 'face (list :foreground found-color)))))
 
-(defun color-file-ivy-buffer-transformer (s)
+(defun cfi-buffer-transformer (s)
   "Return a candidate string for buffer named S.
 Assume that sometimes the buffer named S might not exists.
 That can happen if `ivy-switch-buffer' does not find the buffer and it
 falls back to `ivy-recentf' and the same transformer is used."
   (let ((b (get-buffer s)))
     (if b
-        (color-file-ivy--buffer-transformer b s)
-      (color-file-ivy-file-transformer s))))
+        (cfi--buffer-transformer b s)
+      (cfi-file-transformer s))))
 
 ;;;###autoload
 (defun color-file-ivy-setup ()
   "Set ivy's display transformers to show relevant icons next to the candidates."
   (dolist (cmd color-file-ivy-buffer-commands)
-    (ivy-set-display-transformer cmd 'color-file-ivy-buffer-transformer))
+    (ivy-set-display-transformer cmd 'cfi-buffer-transformer))
   (dolist (cmd color-file-ivy-file-commands)
-    (ivy-set-display-transformer cmd 'color-file-ivy-file-transformer)))
+    (ivy-set-display-transformer cmd 'cfi-file-transformer)))
 
 (provide 'color-file-ivy)

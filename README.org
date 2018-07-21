@@ -43,3 +43,6 @@ regex), enter your configuration in the following way:
 In the above example, all files ending with a "lisp" suffix will be
 colored green.
 
+** Dependencies
+- S https://github.com/magnars/s.el
+- Ivy https://github.com/abo-abo/swiper
